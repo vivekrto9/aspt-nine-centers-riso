@@ -1,0 +1,106 @@
+:root {
+  color-scheme: dark;
+  --color-cobalt: #D8F546;
+  --color-cream: #F0E7DB;
+  --color-ink: #16100D;
+  --color-accent: #E2603D;
+  --color-muted: #9A8E82;
+  --color-soft-blue: #B6A99B;
+  --color-subtle-border: #33291F;
+  --color-text-dark: #6E6157;
+  --color-text-light: #F0E7DB;
+  --color-panel: #1F1815;
+  --color-panel-raised: #241C18;
+  --color-border-strong: #4A3E36;
+
+  --font-display: 'Bricolage Grotesque', Helvetica, Arial, sans-serif;
+  --font-editorial: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Karla', Helvetica, Arial, sans-serif;
+
+  /* Bodygraph Canvas Custom Tokens */
+  --hd-bg-primary: #16100D;
+  --hd-bg-secondary: #1F1815;
+  --hd-text-primary: #F0E7DB;
+  --hd-text-secondary: #B6A99B;
+  --hd-cta-primary: #D8F546;
+  --hd-design-pipe: #E2603D;
+  --hd-personality-pipe: #D8F546;
+  --hd-pipe-bg: #33291F;
+  --hd-personality-pipe: #E2603D;
+  --hd-center-head: #16100D;
+  --hd-center-ajna: #D8F546;
+  --hd-center-throat: #D8F546;
+  --hd-center-g: #D8F546;
+  --hd-center-ego: #E2603D;
+  --hd-center-spleen: #D8F546;
+  --hd-center-sacral: #D8F546;
+  --hd-center-solar: #D8F546;
+  --hd-center-root: #D8F546;
+  --hd-gate-active-bg: #D8F546;
+  --hd-gate-active-text: #16100D;
+  --hd-focus-color: #F0E7DB;
+  --hd-silhouette: #2A211C;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+a {
+  color: var(--color-cobalt);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--color-accent);
+}
+
+input, select, button, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+::placeholder {
+  color: var(--color-muted);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.site-wrap {
+  padding-left: 86px;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+/* Staggered margins for reading cards & types */
+.stagger-1 { margin-left: 0%; }
+.stagger-2 { margin-left: 5%; }
+.stagger-3 { margin-left: 10%; }
+
+@media (max-width: 768px) {
+  .site-wrap {
+    padding-left: 0;
+  }
+
+  .stagger-1, .stagger-2, .stagger-3 {
+    margin-left: 0 !important;
+  }
+}

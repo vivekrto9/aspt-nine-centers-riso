@@ -1,0 +1,193 @@
+---
+import { BLOG_ARTICLES } from "../../../data/blog-articles.ts";
+import { getLocaleFromUrl, localizePath } from "../../../data/localization-contract.ts";
+
+interface Props {
+  limit?: number;
+  eyebrow?: string;
+  title?: string;
+  viewAll?: string;
+  eyebrowEdit?: Record<string, string>;
+  titleEdit?: Record<string, string>;
+  viewAllEdit?: Record<string, string>;
+}
+
+const { limit = 3, eyebrow = "Writing", title = "Reading the chart yourself", viewAll = "View all articles →", eyebrowEdit = {}, titleEdit = {}, viewAllEdit = {} } = Astro.props;
+const displayArticles = BLOG_ARTICLES.slice(0, limit);
+const locale = getLocaleFromUrl(Astro.request.url);
+---
+
+<section class="articles-section" data-articles-section>
+  <div class="section-header-grid">
+    <span class="section-number">07</span>
+    <div class="section-title-wrap">
+      <p class="section-eyebrow" {...eyebrowEdit}>{eyebrow}</p>
+      <h2 class="section-heading" {...titleEdit}>{title}</h2>
+    </div>
+    <div class="section-cta-wrap">
+      <a href={localizePath("/blog", locale)} class="view-all-cta" data-view-all-cta {...viewAllEdit}>{viewAll}</a>
+    </div>
+  </div>
+
+  <div class="articles-grid">
+    {displayArticles.map((a) => (
+      <a href={localizePath(`/blog/${a.slug}`, locale)} class="article-card" data-article-slug={a.slug}>
+        <div class="article-thumb">
+          <span class="thumb-tag">{a.tag}</span>
+        </div>
+        <h3 class="article-title">{a.title}</h3>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .articles-section {
+    padding: 104px 32px 0;
+  }
+
+  .section-header-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 48px;
+  }
+
+  .section-number {
+    grid-column: 1 / span 2;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 96px;
+    line-height: 0.72;
+    letter-spacing: -0.06em;
+    color: transparent;
+    -webkit-text-stroke: 1.5px #D8F546;
+  }
+
+  .section-title-wrap {
+    grid-column: 3 / span 7;
+  }
+
+  .section-cta-wrap {
+    grid-column: 10 / span 3;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .view-all-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #D8F546;
+    background: transparent;
+    padding: 10px 18px;
+    border: 1.5px solid #D8F546;
+    text-decoration: none;
+    transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .view-all-cta:hover {
+    background: #D8F546;
+    color: #F0E7DB;
+    box-shadow: 4px 4px 0 #E2603D;
+  }
+
+  .section-eyebrow {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: #E2603D;
+    margin: 0 0 12px;
+  }
+
+  .section-heading {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 3.6vw, 46px);
+    line-height: 1;
+    letter-spacing: -0.05em;
+    margin: 0;
+  }
+
+  .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .article-card {
+    display: flex;
+    flex-direction: column;
+    color: #16100D;
+    border: 1.5px solid #16100D;
+    background: #F0E7DB;
+    text-decoration: none;
+    transition: border-color 0.18s ease, color 0.18s ease;
+  }
+
+  .article-card:hover {
+    box-shadow: none;
+    transform: none;
+  }
+
+  .article-thumb {
+    aspect-ratio: 4 / 3;
+    background: #D8F546;
+    border-bottom: 1.5px solid #16100D;
+    display: flex;
+    align-items: flex-end;
+    padding: 16px;
+  }
+
+  .thumb-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #B6A99B;
+  }
+
+  .article-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.14;
+    letter-spacing: -0.04em;
+    margin: 0;
+    padding: 20px 22px 24px;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 900px) {
+    .section-header-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .section-number, .section-title-wrap, .section-cta-wrap {
+      grid-column: span 1;
+    }
+    .section-cta-wrap {
+      justify-content: flex-start;
+    }
+    .articles-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Dusk Spine theme */
+  .articles-section { background: #1F1815; color: #F0E7DB; border-top: 1px solid #33291F; }
+  .section-number { -webkit-text-stroke-color: #D8F546; }
+  .view-all-cta { color: #D8F546; border-color: #D8F546; }
+  .view-all-cta:hover { background: #D8F546; color: #16100D; box-shadow: none; }
+  .article-card { color: #F0E7DB; border-color: #4A3E36; background: #16100D; }
+  .article-card:hover { border-color: #D8F546; box-shadow: none; transform: none; }
+  .article-thumb { background: #241C18; border-color: #4A3E36; }
+  .thumb-tag { color: #D8F546; }
+</style>

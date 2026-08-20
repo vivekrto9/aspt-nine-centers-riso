@@ -1,0 +1,112 @@
+---
+interface Props {
+  brandName?: string;
+  brandEdit?: Record<string, string>;
+  noteEdit?: Record<string, string>;
+  plateHref?: string;
+  readingsHref?: string;
+  questionsHref?: string;
+  chartHref?: string;
+}
+
+const {
+  brandName = "Nine Centres",
+  brandEdit = {},
+  noteEdit = {},
+  plateHref = "#plate",
+  readingsHref = "#readings",
+  questionsHref = "#faq",
+  chartHref = "#chart",
+} = Astro.props;
+---
+
+<footer class="hd-footer" data-hd-footer>
+  <div class="footer-top">
+    <nav class="footer-nav" aria-label="Footer Navigation">
+      <a href={plateHref} class="footer-link">Plate</a>
+      <a href={readingsHref} class="footer-link">Readings</a>
+      <a href={questionsHref} class="footer-link">Questions</a>
+      <a href={chartHref} class="footer-link cta-accent">Free chart</a>
+    </nav>
+    <p class="footer-copyright" {...noteEdit}>
+      &copy; 2026 &middot; {brandName.toLowerCase()}
+    </p>
+  </div>
+  <p class="footer-wordmark" {...brandEdit}>
+    {brandName}
+  </p>
+</footer>
+
+<style>
+  .hd-footer {
+    background: #16100D;
+    color: #F0E7DB;
+    padding: 48px 32px 20px;
+    border-top: 1px solid #33291F;
+  }
+
+  .footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 26px;
+  }
+
+  .footer-link {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #9A8E82;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .footer-link:hover {
+    color: #D8F546;
+  }
+
+  .footer-link.cta-accent {
+    color: #D8F546;
+  }
+
+  .footer-copyright {
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #6E6157;
+    margin: 0;
+  }
+
+  .footer-wordmark {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 9.4vw, 150px);
+    line-height: 0.82;
+    letter-spacing: -0.07em;
+    margin: 0;
+    color: transparent;
+    -webkit-text-stroke: 1.25px #4A3E36;
+    user-select: none;
+  }
+
+  @media (max-width: 640px) {
+    .hd-footer {
+      padding: 36px 20px 16px;
+    }
+    .footer-top {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+  }
+</style>

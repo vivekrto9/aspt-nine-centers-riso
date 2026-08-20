@@ -1,0 +1,105 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  buttonText?: string;
+  buttonHref?: string;
+  titleEdit?: Record<string, string>;
+  subtitleEdit?: Record<string, string>;
+  buttonEdit?: Record<string, string>;
+}
+
+const {
+  title = "Start with the chart. Decide about the reading after.",
+  subtitle = "Free, sent within a day.",
+  buttonText = "Get your free bodygraph",
+  buttonHref = "#chart",
+  titleEdit = {},
+  subtitleEdit = {},
+  buttonEdit = {},
+} = Astro.props;
+---
+
+<section class="final-cta-section" data-final-cta-section>
+  <div class="cta-banner">
+    <div class="cta-text-wrap">
+      <h2 class="cta-title" {...titleEdit}>{title}</h2>
+      <p class="cta-subtitle" {...subtitleEdit}>{subtitle}</p>
+    </div>
+    <a href={buttonHref} class="cta-action-btn" {...buttonEdit}>
+      {buttonText}
+    </a>
+  </div>
+</section>
+
+<style>
+  .final-cta-section {
+    padding: 104px 32px 96px;
+  }
+
+  .cta-banner {
+    background: #16100D;
+    color: #F0E7DB;
+    padding: 64px 44px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 36px;
+  }
+
+  .cta-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.02;
+    letter-spacing: -0.05em;
+    margin: 0 0 14px;
+    max-width: 20ch;
+  }
+
+  .cta-subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #B6A99B;
+    margin: 0;
+  }
+
+  .cta-action-btn {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #16100D;
+    background: #E2603D;
+    border: 1.5px solid #E2603D;
+    padding: 18px 30px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .cta-action-btn:hover {
+    background: #F0E7DB;
+    border-color: #F0E7DB;
+    color: #16100D;
+  }
+
+  @media (max-width: 768px) {
+    .final-cta-section {
+      padding: 64px 20px 48px;
+    }
+    .cta-banner {
+      padding: 40px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  /* Dusk Spine theme */
+  .final-cta-section { background: #16100D; color: #F0E7DB; border-top: 1px solid #33291F; }
+  .cta-banner { border-color: #D8F546; background: #1F1815; }
+  .cta-subtitle { color: #9A8E82; }
+  .cta-action-btn { background: #D8F546; color: #16100D; border-color: #D8F546; }
+  .cta-action-btn:hover { background: #F0E7DB; color: #16100D; border-color: #F0E7DB; }
+</style>
