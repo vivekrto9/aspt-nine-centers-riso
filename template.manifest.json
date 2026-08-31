@@ -1,8 +1,8 @@
 {
-  "templateKey": "aspt-nine-centers-dusk-spine",
-  "displayName": "Nine Centres Dusk Spine",
+  "templateKey": "aspt-nine-centers-riso",
+  "displayName": "Nine Centres Riso Rail",
   "repo": {
-    "url": "https://github.com/vivekrto9/aspt-nine-centers-dusk-spine.git",
+    "url": "https://github.com/vivekrto9/aspt-nine-centers-riso.git",
     "commitSha": "RESOLVED_AT_TEMPLATE_REGISTRATION"
   },
   "stage": "starter-template",

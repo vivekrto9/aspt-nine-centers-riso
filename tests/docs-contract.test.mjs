@@ -15,11 +15,11 @@ const docs = {
   productLeads: read("docs/product-lead-generation.md"),
 };
 
-test("repository docs describe Nine Centres Dusk Spine without stale single-page or legacy catalog guidance", () => {
+test("repository docs describe Nine Centres Riso Rail without stale single-page or legacy catalog guidance", () => {
   const publicDocs = Object.values(docs).join("\n");
   const d1Schema = read("database/d1/001_initial_site_schema.sql");
 
-  assert.match(docs.readme, /# Nine Centres — Dusk Spine/);
+  assert.match(docs.readme, /# Nine Centres — Riso Rail/);
   assert.match(docs.readme, /runnable AstroPages template/);
   assert.doesNotMatch(publicDocs, /single-page AstroPages template/i);
   assert.doesNotMatch(publicDocs, /only the home page/i);

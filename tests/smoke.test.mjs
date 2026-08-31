@@ -8,8 +8,8 @@ const readJson = (path) => JSON.parse(read(path));
 
 test("Nine Centres template declares its supported visitor journeys", () => {
   const manifest = readJson("template.manifest.json");
-  assert.equal(manifest.templateKey, "aspt-nine-centers-dusk-spine");
-  assert.equal(manifest.displayName, "Nine Centres Dusk Spine");
+  assert.equal(manifest.templateKey, "aspt-nine-centers-riso");
+  assert.equal(manifest.displayName, "Nine Centres Riso Rail");
   assert.deepEqual(manifest.supportedCapabilities, [
     "capability-content-seo-localization@0.3.0",
     "capability-generated-site-operations@0.3.0",
