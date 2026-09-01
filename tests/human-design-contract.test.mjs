@@ -6,9 +6,14 @@ const root = new URL("../", import.meta.url);
 const read = (path) => readFileSync(new URL(path, root), "utf8");
 
 test("home chart flow calls the generated-site API and reveals its saved result in place", () => {
-  const generator = read("src/components/home/sections/BodygraphGeneratorSection.astro");
+  const generator = read(
+    "src/components/home/sections/BodygraphGeneratorSection.astro",
+  );
   const result = read("src/pages/human-design/[slug].astro");
-  assert.match(generator, /fetch\("\/api\/astropages\/generated-site\/human-design"/);
+  assert.match(
+    generator,
+    /fetch\("\/api\/astropages\/generated-site\/human-design"/,
+  );
   assert.match(generator, /payload\?\.readingId/);
   assert.match(generator, /hd:reading:/);
   assert.match(generator, /data-result-view/);
@@ -26,7 +31,9 @@ test("blog chart CTA returns visitors to the homepage chart form", () => {
 });
 
 test("birth city fields use the shared Google Places selector and submit resolved coordinates", () => {
-  const generator = read("src/components/home/sections/BodygraphGeneratorSection.astro");
+  const generator = read(
+    "src/components/home/sections/BodygraphGeneratorSection.astro",
+  );
   const chartForm = read("src/pages/human-design.astro");
   const selector = read("src/components/shared/PlaceAutocomplete.astro");
   assert.match(generator, /import PlaceAutocomplete/);
@@ -49,12 +56,21 @@ test("all required Human Design visitor routes are implemented", () => {
   for (const path of [
     "src/pages/human-design.astro",
     "src/pages/human-design/[slug].astro",
-  ]) assert.ok(read(path).length > 100, `${path} must contain a real implementation`);
+  ])
+    assert.ok(
+      read(path).length > 100,
+      `${path} must contain a real implementation`,
+    );
   for (const path of [
     "src/pages/compatibility.astro",
     "src/pages/compatibility/[slug].astro",
     "src/pages/transit.astro",
-  ]) assert.equal(existsSync(new URL(path, root)), false, `${path} should be removed`);
+  ])
+    assert.equal(
+      existsSync(new URL(path, root)),
+      false,
+      `${path} should be removed`,
+    );
   const chartForm = read("src/pages/human-design.astro");
   assert.match(chartForm, /name="email" type="email"/);
   assert.match(read("src/pages/human-design/[slug].astro"), /chart-not-found/);
@@ -64,7 +80,10 @@ test("bodygraph result page exposes the Dusk explorer workspace and interpretati
   const result = read("src/pages/human-design/[slug].astro");
   const canvas = read("src/components/bodygraph/UpastroBodyGraphCanvas.jsx");
   assert.match(result, /Bodygraph explorer/);
-  assert.match(result, /<UpastroBodyGraphCanvas theme="dark"[\s\S]*client:only="react"/);
+  assert.match(
+    result,
+    /<UpastroBodyGraphCanvas theme="dark"[\s\S]*client:only="react"/,
+  );
   assert.match(result, /slot="fallback"[\s\S]*<BodyGraphCanvas theme="dusk"/);
   assert.match(canvas, /const PRIORITY_ACTIVE_OVERLAY_CHANNELS/);
   assert.match(canvas, /const INTEGRATION_CLUSTER_ALL_CHANNELS/);
@@ -72,20 +91,31 @@ test("bodygraph result page exposes the Dusk explorer workspace and interpretati
   assert.match(canvas, /className={`upastro-bodygraph-canvas/);
   assert.match(canvas, /className={`upastro-activation-row/);
   assert.doesNotMatch(canvas, /<button/);
-  assert.match(read("src/styles/hd-routes.css"), /\.upastro-bodygraph-canvas \{[\s\S]*pointer-events: none;/);
+  assert.match(
+    read("src/styles/hd-routes.css"),
+    /\.upastro-bodygraph-canvas \{[\s\S]*pointer-events: none;/,
+  );
   assert.match(result, /data-properties-open>Properties/);
   assert.doesNotMatch(result, /data-layer-toggle=/);
   assert.match(result, /<ChartPropertiesDrawer activeGates=/);
-  const propertiesDrawer = read("src/components/bodygraph/ChartPropertiesDrawer.astro");
+  const propertiesDrawer = read(
+    "src/components/bodygraph/ChartPropertiesDrawer.astro",
+  );
   assert.match(propertiesDrawer, /data-property-tab="centres"/);
   assert.match(propertiesDrawer, /data-property-tab="gates"/);
   assert.match(propertiesDrawer, /data-property-tab="channels"/);
-  assert.doesNotMatch(propertiesDrawer, /data-property-tab="summary"|data-property-tab="activations"/);
+  assert.doesNotMatch(
+    propertiesDrawer,
+    /data-property-tab="summary"|data-property-tab="activations"/,
+  );
   assert.match(propertiesDrawer, /data-property-card/);
   assert.match(propertiesDrawer, /data-property-back/);
   assert.match(propertiesDrawer, /data-property-previous/);
   assert.match(propertiesDrawer, /data-property-next/);
-  assert.match(propertiesDrawer, /<UnlockReadingCard upgradeHref={upgradeHref}/);
+  assert.match(
+    propertiesDrawer,
+    /<UnlockReadingCard upgradeHref={upgradeHref}/,
+  );
   assert.match(propertiesDrawer, /!unlocked && <UnlockReadingCard/);
   assert.match(
     result,
@@ -111,35 +141,64 @@ test("bodygraph result page exposes the Dusk explorer workspace and interpretati
   assert.match(unlockCard, /Upgrade Now/);
   assert.match(unlockCard, /hd-unlock-card__icon/);
   assert.match(guide, /data-energy-back/);
-  assert.match(read("src/styles/hd-routes.css"), /\.hd-explorer-workspace \{[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/);
-  assert.match(read("src/styles/hd-routes.css"), /\.hd-properties-drawer \{[\s\S]*width: 50vw/);
-  assert.match(read("src/styles/hd-routes.css"), /\.hd-energy-visual \{[\s\S]*aspect-ratio: 1 \/ 1/);
-  assert.doesNotMatch(read("src/styles/hd-routes.css"), /\.hd-guide-panel__viewport \{[^}]*overscroll-behavior:\s*contain/);
+  assert.match(
+    read("src/styles/hd-routes.css"),
+    /\.hd-explorer-workspace \{[\s\S]*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/,
+  );
+  assert.match(
+    read("src/styles/hd-routes.css"),
+    /\.hd-properties-drawer \{[\s\S]*width: 50vw/,
+  );
+  assert.match(
+    read("src/styles/hd-routes.css"),
+    /\.hd-energy-visual \{[\s\S]*aspect-ratio: 1 \/ 1/,
+  );
+  assert.doesNotMatch(
+    read("src/styles/hd-routes.css"),
+    /\.hd-guide-panel__viewport \{[^}]*overscroll-behavior:\s*contain/,
+  );
 });
 
 test("response page hydrates one React runtime and clears the fixed Dusk spine safely", () => {
   const config = read("astro.config.mjs");
   const styles = read("src/styles/hd-routes.css");
   assert.match(config, /dedupe:\s*\["react",\s*"react-dom"\]/);
-  assert.match(styles, /\.hd-reading \.hd-bodygraph-page \{[\s\S]*?padding-left:\s*86px/);
-  assert.match(styles, /@media \(max-width: 768px\) \{[\s\S]*?\.hd-reading \.hd-bodygraph-page \{[\s\S]*?padding-left:\s*0/);
+  assert.match(
+    styles,
+    /\.hd-reading \.hd-bodygraph-page \{[\s\S]*?padding-left:\s*86px/,
+  );
+  assert.match(
+    styles,
+    /@media \(max-width: 768px\) \{[\s\S]*?\.hd-reading \.hd-bodygraph-page \{[\s\S]*?padding-left:\s*0/,
+  );
 });
 
 test("successful Stripe payment returns to and unlocks the linked saved chart", () => {
   const checkout = read("src/pages/api/checkout/full-reading.ts");
   const access = read("src/pages/api/checkout/reading-access.ts");
   const result = read("src/pages/human-design/[slug].astro");
-  const orders = read("src/server/capabilities/vendor/astropages-capabilities/human-design-orders.ts");
+  const orders = read(
+    "src/server/capabilities/vendor/astropages-capabilities/human-design-orders.ts",
+  );
   assert.match(checkout, /successPath = order\.readingId/);
-  assert.match(checkout, /\/human-design\/\$\{encodeURIComponent\(order\.readingId\)\}/);
+  assert.match(
+    checkout,
+    /\/human-design\/\$\{encodeURIComponent\(order\.readingId\)\}/,
+  );
   assert.match(orders, /hasPaidHumanDesignReadingAccess/);
   assert.match(orders, /payment_status = 'paid'/);
   assert.match(access, /getPaidHumanDesignReadingAccess/);
-  assert.match(access, /chartUrl: access \? `\/human-design\/\$\{encodeURIComponent\(readingId\)\}#bodygraph`/);
+  assert.match(
+    access,
+    /chartUrl: access \? `\/human-design\/\$\{encodeURIComponent\(readingId\)\}#bodygraph`/,
+  );
   assert.match(result, /hasFullReadingAccess/);
   assert.match(result, /unlocked=\{hasFullReadingAccess\}/);
   assert.match(result, /session-status\?session_id=/);
-  assert.match(result, /window\.location\.replace\(`\/human-design\/\$\{encodeURIComponent\(slug\)\}#bodygraph`\)/);
+  assert.match(
+    result,
+    /window\.location\.replace\(`\/human-design\/\$\{encodeURIComponent\(slug\)\}#bodygraph`\)/,
+  );
 });
 
 test("homepage plate uses the static non-interactive production bodygraph canvas", () => {
@@ -152,23 +211,39 @@ test("homepage plate uses the static non-interactive production bodygraph canvas
 });
 
 test("provider contract is restricted to approved AstrologyAPI Human Design endpoints", () => {
-  const provider = read("src/server/capabilities/vendor/astropages-capabilities/human-design-api.ts");
+  const provider = read(
+    "src/server/capabilities/vendor/astropages-capabilities/human-design-api.ts",
+  );
   for (const endpoint of [
     "/v1/human-design",
-    "/v1/human-design/interpretation/chart",
-    "/v1/human-design/interpretation/about",
-  ]) assert.equal(provider.includes(endpoint), true, `${endpoint} must be declared`);
-  assert.doesNotMatch(provider, /human-design\/compatibility|human-design\/transit-range/);
+    "/v1/human-design/chart-interpretation",
+    "/v1/human-design/traits-interpretation",
+  ])
+    assert.equal(
+      provider.includes(endpoint),
+      true,
+      `${endpoint} must be declared`,
+    );
+  assert.doesNotMatch(
+    provider,
+    /human-design\/compatibility|human-design\/transit-range/,
+  );
   assert.match(provider, /ASTROLOGY_API_BASE_URL/);
   assert.match(provider, /X_ASTROLOGYAPI_KEY/);
   assert.match(provider, /"x-astrologyapi-key": apiKey/);
-  assert.doesNotMatch(provider, /ASTROLOGYAPI_USER_ID|ASTROLOGYAPI_PASSWORD|Basic \$\{btoa/);
+  assert.doesNotMatch(
+    provider,
+    /ASTROLOGYAPI_USER_ID|ASTROLOGYAPI_PASSWORD|Basic \$\{btoa/,
+  );
 });
 
 test("Human Design requests use the canonical runtime URL and Worker secret", async () => {
-  const { humanDesignEndpoints, postHumanDesignProvider } = await import(
-    "../src/server/capabilities/vendor/astropages-capabilities/human-design-api.ts"
-  );
+  const {
+    buildHumanDesignInterpretationPayload,
+    humanDesignEndpoints,
+    postHumanDesignProvider,
+  } =
+    await import("../src/server/capabilities/vendor/astropages-capabilities/human-design-api.ts");
   let captured;
   await postHumanDesignProvider({
     env: {
@@ -185,6 +260,30 @@ test("Human Design requests use the canonical runtime URL and Worker secret", as
   assert.equal(captured.url, "https://astrology.test/v1/human-design");
   assert.equal(captured.init.headers["x-astrologyapi-key"], "test-key");
   assert.equal(captured.init.headers.authorization, undefined);
+  assert.deepEqual(
+    buildHumanDesignInterpretationPayload({
+      name: "Asha",
+      day: 1,
+      month: 9,
+      year: 1990,
+      hour: 12,
+      minute: 30,
+      latitude: 28.6139,
+      longitude: 77.209,
+      timezone_offset: 5.5,
+    }),
+    {
+      name: "Asha",
+      day: 1,
+      month: 9,
+      year: 1990,
+      hour: 12,
+      min: 30,
+      lat: 28.6139,
+      lon: 77.209,
+      tzone: 5.5,
+    },
+  );
 });
 
 test("all 64 bodygraph gates terminate at the correct channel anchors", async () => {
@@ -195,23 +294,62 @@ test("all 64 bodygraph gates terminate at the correct channel anchors", async ()
     buildGatePositions,
   } = await import("../src/data/bodygraph-geometry.ts");
   const canvas = read("src/components/bodygraph/BodyGraphCanvas.astro");
-  const requiredPairs = [[32, 54], [28, 38], [18, 58], [49, 19], [55, 39], [30, 41]];
-  const pairKey = ([first, second]) => [first, second].sort((a, b) => a - b).join("-");
+  const requiredPairs = [
+    [32, 54],
+    [28, 38],
+    [18, 58],
+    [49, 19],
+    [55, 39],
+    [30, 41],
+  ];
+  const pairKey = ([first, second]) =>
+    [first, second].sort((a, b) => a - b).join("-");
   const channelKeys = new Set(DEFAULT_CHANNELS.map(pairKey));
 
-  assert.equal(new Set(DEFAULT_CHANNELS.flat()).size, 64, "every gate must belong to exactly one channel");
-  for (const pair of requiredPairs) assert.equal(channelKeys.has(pairKey(pair)), true, `${pair.join("–")} must be connected`);
+  assert.equal(
+    new Set(DEFAULT_CHANNELS.flat()).size,
+    64,
+    "every gate must belong to exactly one channel",
+  );
+  for (const pair of requiredPairs)
+    assert.equal(
+      channelKeys.has(pairKey(pair)),
+      true,
+      `${pair.join("–")} must be connected`,
+    );
 
   const labels = buildGatePositions();
   const anchors = buildChannelGatePositions();
-  assert.notDeepEqual(anchors[32], labels[32], "channel endpoints must reach centre edges instead of stopping under labels");
-  assert.deepEqual([54, 38, 58].map((gate) => anchors[gate].x), [228, 228, 228]);
-  assert.deepEqual([19, 39, 41].map((gate) => anchors[gate].x), [332, 332, 332]);
+  assert.notDeepEqual(
+    anchors[32],
+    labels[32],
+    "channel endpoints must reach centre edges instead of stopping under labels",
+  );
+  assert.deepEqual(
+    [54, 38, 58].map((gate) => anchors[gate].x),
+    [228, 228, 228],
+  );
+  assert.deepEqual(
+    [19, 39, 41].map((gate) => anchors[gate].x),
+    [332, 332, 332],
+  );
   const renderedGraph = build();
-  assert.equal(renderedGraph.channels.every((channel) => channel.d.length > 0), true);
-  const attachments = renderedGraph.channels.flatMap((channel) => channel.attachments);
-  assert.equal(attachments.length, 64, "every gate must have one visible terminal attachment");
-  assert.equal(attachments.every((attachment) => attachment.d.length > 0), true);
+  assert.equal(
+    renderedGraph.channels.every((channel) => channel.d.length > 0),
+    true,
+  );
+  const attachments = renderedGraph.channels.flatMap(
+    (channel) => channel.attachments,
+  );
+  assert.equal(
+    attachments.length,
+    64,
+    "every gate must have one visible terminal attachment",
+  );
+  assert.equal(
+    attachments.every((attachment) => attachment.d.length > 0),
+    true,
+  );
   assert.match(canvas, /data-channel-pair/);
   assert.match(canvas, /data-channel-attachment/);
 });
@@ -219,14 +357,22 @@ test("all 64 bodygraph gates terminate at the correct channel anchors", async ()
 test("Human Design readings have a durable D1 table and declared secrets", () => {
   const migration = read("migrations/0008_human_design_readings.sql");
   const secrets = JSON.parse(read("astropages/secrets.manifest.json"));
-  assert.match(migration, /CREATE TABLE IF NOT EXISTS ap_human_design_readings/);
-  const secretKeys = secrets.integrations.flatMap((integration) => integration.secrets.map((secret) => secret.key));
+  assert.match(
+    migration,
+    /CREATE TABLE IF NOT EXISTS ap_human_design_readings/,
+  );
+  const secretKeys = secrets.integrations.flatMap((integration) =>
+    integration.secrets.map((secret) => secret.key),
+  );
   assert.deepEqual(secretKeys, ["STRIPE_SECRET_KEY", "STRIPE_WEBHOOK_SECRET"]);
 });
 
 test("proprietary masterclass implementation is not mounted or imported", () => {
   const index = read("src/pages/index.astro");
-  assert.doesNotMatch(index, /MasterclassCourseView|masterclass-view-container/);
+  assert.doesNotMatch(
+    index,
+    /MasterclassCourseView|masterclass-view-container/,
+  );
 });
 
 test("home exposes major visible section copy through Content Studio fields", () => {
@@ -243,7 +389,15 @@ test("home exposes major visible section copy through Content Studio fields", ()
     "articles_title",
     "final_cta_title",
   ]) {
-    assert.equal(defaults.includes(`${field}:`), true, `${field} default must exist`);
-    assert.equal(index.includes(`builderEdit(\"${field}\")`), true, `${field} must be editable`);
+    assert.equal(
+      defaults.includes(`${field}:`),
+      true,
+      `${field} default must exist`,
+    );
+    assert.equal(
+      index.includes(`builderEdit(\"${field}\")`),
+      true,
+      `${field} must be editable`,
+    );
   }
 });
