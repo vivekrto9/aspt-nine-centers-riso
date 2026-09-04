@@ -29,3 +29,62 @@ test("secret binding resolution prefers Worker secrets and falls back to the leg
   assert.equal(await resolveSecretBinding(env, "DIRECT_ONLY_SECRET"), "worker-secret");
   assert.equal(await resolveSecretBinding(env, "LEGACY_ONLY_SECRET"), "legacy-secret");
 });
+
+test("Google Places resolves its canonical platform binding with legacy fallbacks", async () => {
+  const {
+    integrationSecretBundleBinding,
+    legacyPlatformGooglePlacesSecretBinding,
+    platformGooglePlacesSecretBinding,
+    resolveSecretBinding,
+  } = await import(
+    "../../src/server/aggregator/runtime-bindings.ts"
+  );
+
+  assert.equal(
+    platformGooglePlacesSecretBinding,
+    "ASTROPAGES_PLATFORM_GOOGLE_PLACES_GOOGLE_PLACES_API_KEY",
+  );
+  assert.equal(
+    await resolveSecretBinding(
+      { [platformGooglePlacesSecretBinding]: "canonical-key" },
+      platformGooglePlacesSecretBinding,
+    ),
+    "canonical-key",
+  );
+  assert.equal(
+    await resolveSecretBinding(
+      { [legacyPlatformGooglePlacesSecretBinding]: "legacy-platform-key" },
+      platformGooglePlacesSecretBinding,
+    ),
+    "legacy-platform-key",
+  );
+  assert.equal(
+    await resolveSecretBinding(
+      {
+        [integrationSecretBundleBinding]: JSON.stringify({
+          secrets: { GOOGLE_PLACES_API_KEY: "legacy-bundled-key" },
+        }),
+      },
+      platformGooglePlacesSecretBinding,
+    ),
+    "legacy-bundled-key",
+  );
+  assert.equal(
+    await resolveSecretBinding(
+      {
+        [integrationSecretBundleBinding]: JSON.stringify({
+          secrets: { [platformGooglePlacesSecretBinding]: "canonical-bundled-key" },
+        }),
+      },
+      "GOOGLE_PLACES_API_KEY",
+    ),
+    "canonical-bundled-key",
+  );
+  assert.equal(
+    await resolveSecretBinding(
+      { GOOGLE_PLACES_API_KEY: "legacy-direct-key" },
+      platformGooglePlacesSecretBinding,
+    ),
+    "legacy-direct-key",
+  );
+});
