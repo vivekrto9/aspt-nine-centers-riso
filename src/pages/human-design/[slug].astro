@@ -9,8 +9,7 @@ import { getLocaleFromUrl, localizePath } from "../../data/localization-contract
 import { defaultHumanDesignProfile, formatFixtureBirthline, preparedChartFixture } from "../../data/human-design-fixtures.ts";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getRuntimeEnv } from "../../server/generated-site/request.ts";
-import { loadHumanDesignPage, normalizeHumanDesignPageView } from "../../server/generated-site/human-design-page.ts";
-import { hasPaidHumanDesignReadingAccess } from "../../server/capabilities/vendor/astropages-capabilities/human-design-orders.ts";
+import { hasPaidHumanDesignPageAccess, loadHumanDesignPage, normalizeHumanDesignPageView } from "../../server/generated-site/human-design-page.ts";
 import "../../styles/hd-routes.css";
 
 export const prerender = false;
@@ -26,7 +25,7 @@ if (slug.startsWith("hd_chart_") && !savedPage) {
 }
 const savedReading = savedPage?.reading ?? null;
 const hasFullReadingAccess = savedReading
-  ? await hasPaidHumanDesignReadingAccess({ env: runtimeEnv, readingId: slug })
+  ? await hasPaidHumanDesignPageAccess({ env: runtimeEnv, readingId: slug })
   : false;
 const savedProfile = savedReading?.profile && typeof savedReading.profile === "object" ? savedReading.profile as Record<string, unknown> : null;
 const seo = {

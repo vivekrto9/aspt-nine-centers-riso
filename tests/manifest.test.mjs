@@ -8,8 +8,8 @@ const leadsManifest = JSON.parse(readFileSync(new URL("../astropages/leads.manif
 const routePaths = (items) => new Set(items.map((item) => item.path));
 
 test("template manifest keeps base starter identity", () => {
-  assert.equal(manifest.templateKey, "aspt-nine-centers-dusk-spine");
-  assert.equal(manifest.displayName, "Nine Centres Dusk Spine");
+  assert.equal(manifest.templateKey, "aspt-nine-centers-riso");
+  assert.equal(manifest.displayName, "Nine Centres Riso Rail");
   assert.equal(Object.hasOwn(manifest, "version"), false);
   assert.equal(Object.hasOwn(manifest, "registryVersionId"), false);
   assert.equal(Object.hasOwn(manifest, "analytics"), false);

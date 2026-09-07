@@ -12,22 +12,22 @@ export const runtimeContract = {
   },
   resources: {
     local: {
-      workerName: "astropages-base-template",
-      d1DatabaseName: "astropages-base-template-site",
-      r2BucketName: "astropages-base-template-media",
-      kvNamespaceName: "LOCAL_ASTROPAGES_BASE_TEMPLATE_SESSION_KV",
+      workerName: "aspt-nine-centers-riso",
+      d1DatabaseName: "aspt-nine-centers-riso-site",
+      r2BucketName: "aspt-nine-centers-riso-media",
+      kvNamespaceName: "LOCAL_ASPT_NINE_CENTERS_RISO_SESSION_KV",
     },
     preview: {
-      workerName: "astropages-base-template-preview",
-      d1DatabaseName: "astropages-base-template-preview-site",
-      r2BucketName: "astropages-base-template-preview-media",
-      kvNamespaceName: "astropages-base-template-preview-session",
+      workerName: "aspt-nine-centers-riso-preview",
+      d1DatabaseName: "aspt-nine-centers-riso-preview-site",
+      r2BucketName: "aspt-nine-centers-riso-preview-media",
+      kvNamespaceName: "aspt-nine-centers-riso-preview-session",
     },
     production: {
-      workerName: "astropages-base-template-production",
-      d1DatabaseName: "astropages-base-template-production-site",
-      r2BucketName: "astropages-base-template-production-media",
-      kvNamespaceName: "astropages-base-template-production-session",
+      workerName: "aspt-nine-centers-riso-production",
+      d1DatabaseName: "aspt-nine-centers-riso-production-site",
+      r2BucketName: "aspt-nine-centers-riso-production-media",
+      kvNamespaceName: "aspt-nine-centers-riso-production-session",
     },
   },
   requiredSecretNames: ["EMDASH_ENCRYPTION_KEY", "BUILDER_MCP_TOKEN", "BUILDER_MCP_PROVISION_SECRET"],
@@ -107,7 +107,7 @@ export const runtimeContract = {
 export const integrationSecretBundleBinding = "ASTROPAGES_INTEGRATION_SECRETS_JSON";
 export const integrationSecretBundleSecretProvider = "INTEGRATIONS";
 export const integrationSecretBundleSecretName = "INTEGRATION_SECRETS_JSON";
-export const platformGooglePlacesSecretBinding = "ASTROPAGES_PLATFORM_GOOGLE_PLACES_API_KEY";
+export const platformGooglePlacesSecretBinding = "ASTROPAGES_PLATFORM_GOOGLE_PLACES_GOOGLE_PLACES_API_KEY";
 export const platformGooglePlacesSecretName = "ASTROPAGES_PLATFORM_GOOGLE_PLACES_GOOGLE_PLACES_API_KEY";
 
 const projectIdPattern =
